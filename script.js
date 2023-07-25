@@ -104,6 +104,7 @@ window.addEventListener("load", () => {
 });
 
 let selectedGenre = [];
+setGenre();
 /**
  * Função setGenre()
  * Cria e exibe uma lista de tags correspondentes a diferentes gêneros de filmes.
@@ -138,6 +139,8 @@ function setGenre() {
     tagsEl.append(t);
   });
 }
+
+
 
 function closeNav() {
   document.getElementById("myNav").style.width = "0%";
