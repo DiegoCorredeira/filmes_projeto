@@ -86,7 +86,7 @@ const genres = [
 const main = document.getElementById("main");
 const form = document.getElementById("form");
 const search = document.getElementById("search");
-const tags = document.getElementById("tags");
+const tagsEl = document.getElementById("tags");
 
 const prev = document.getElementById("prev");
 const next = document.getElementById("next");
