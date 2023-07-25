@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300;1,400&family=Rubik:ital,wght@0,300;0,400;1,300;1,400&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+html {
+  height: 100%;
+}
+:root {
+  --primary-background-color: #20234d;
+  --secondary-background-color: #4e5494;
+}
+
+body {
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    var(--primary-background-color),
+    var(--secondary-background-color)
+  );
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+}
+header {
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  aign-items: center;
+  justify-content: space-between;
+  background: linear-gradient(
+    -45deg,
+    var(--primary-background-color),
+    var(--secondary-background-color)
+  );
+}
+.header ul li{
+    font-size: 20px;
+    font-family: cursive;
+    list-style-type: none;
+    border-radius: 5px;
+    background:linear-gradient( -45deg, var(--primary-background-color),
+    var(--secondary-background-color));
+    padding: 625rem;
+    color: #FFF;
+    text-decoration: none;
+    transition: color 0.5s;
+}
+.header ul li:hover{
+    background: linear-gradient(-45deg, #c3c3c3, #FFF);
+    color: var(--secondary-background-color);
+}
+.mainlogo {
+  width: auto;
+  height: 60px;
+}
+.git {
+  width: auto;
+  height: 10px;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.search {
+  background-color: transparent;
+  border: 2px solid var(--primary-background-color);
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  color: #FFF;
+  font-size: 1rem;
+  font-family: inherit;
+}
