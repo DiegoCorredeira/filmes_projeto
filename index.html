@@ -9,14 +9,52 @@
   </head>
   <body>
     <header>
-        <div class="logo">
-            <a href=""><img src="assets/img/logo.jpg" alt=""></a>
-            <a href="https://github.com/diegocorredeira" title="Github link" target="_blank"><img src="assets/img/Octicons-mark-github.svg.png" alt=""></a>
-        </div>
-        <form action="" id="form">
-            <input type="text" placeholder="Pesquise por um filme" id="search" class="search">
-        </form>
+      <div class="logo">
+        <a href=""><img src="assets/img/logo.jpg" alt="" /></a>
+        <a
+          href="https://github.com/diegocorredeira"
+          title="Github link"
+          target="_blank"
+          ><img src="assets/img/Octicons-mark-github.svg.png" alt=""
+        /></a>
+      </div>
+      <form action="" id="form">
+        <input
+          type="text"
+          placeholder="Pesquise por um filme"
+          id="search"
+          class="search"
+        />
+      </form>
     </header>
-    </header>
+    <div id="tags"></div>
+    <div id="myNav" class="overlay">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav"
+        >&times;</a
+      >
+
+      <div class="overlay-content" id="overlay-content"></div>
+      <a href="javascript:void(0)" class="arrow left-arrow" id="left-arrow">
+        &#8656;
+      </a>
+      <a href="javascript:void(0)" class="arrow right-arrow" id="right-arrow">
+        &#8658;
+      </a>
+    </div>
+    <main id="main"></main>
+    <div class="pagination">
+      <div class="page" id="prev">&#8656; Anterior</div>
+      <div class="current" id="current">1</div>
+      <div class="page" id="prev">&#8658; Próxima</div>
+    </div>
+    <a
+      href="https://github.com/diegocorredeira"
+      class="corredeira"
+      target="_blank"
+      >Por Diego Corredeira</a
+    >
+    <span class="loader"></span>
+    <script src="script.js"></script>
+    <script src="http://kit.fontawesome.com/f7a442f79b.js" crossorigin="anonymous"></script>
   </body>
 </html>
