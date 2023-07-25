@@ -28,7 +28,7 @@ header {
   padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;
-  aign-items: center;
+  align-items: center;
   justify-content: space-between;
   background: linear-gradient(
     -45deg,
@@ -90,9 +90,9 @@ a{
 }
 #tags{
   display: flex;
-  fw-wrap: wrap;
+  flex-wrap: wrap;
   justify-content: center;
-  aic-content: center;
+  align-content: center;
   margin: 10px auto;
   width: 80%;
 }
