@@ -14,7 +14,7 @@ const genres = [
     name: "Adventure",
   },
   {
-    id: 16, 
+    id: 16,
     name: "Animation",
   },
   {
@@ -139,6 +139,51 @@ function setGenre() {
     tagsEl.append(t);
   });
 }
+
+function highlightSelection() {
+  /**
+   * Destaca visualmente as tags de gênero selecionadas na página.
+   *
+   * @returns {void} - Esta função não retorna nada. Ela destaca as tags de gênero selecionadas adicionando a classe "highlight".
+   */
+  const tags = document.querySelectorAll(".tag");
+  tags.forEach((tag) => {
+    tag.classList.remove("highlight");
+  });
+  clearBtn();
+  if (selectedGenre.length != 0) {
+    selectedGenre.forEach((id) => {
+      const hightlightedTag = document.getElementById(id);
+      hightlightedTag.classList.add("highlight");
+    });
+  }
+}
+
+function clearBtn() {
+  /**
+   * Exibe ou oculta o botão "Clear" (Limpar) na página, permitindo que o usuário limpe as seleções de gênero feitas.
+   *
+   * @returns {void} - Esta função não retorna nada. Ela manipula a exibição do botão "Clear".
+   */
+  let clearBtn = document.getElementById("clear");
+  if (clearBtn) {
+    clearBtn.classList.add("highlight");
+  } else {
+    let clear = document.createElement("div");
+    clear.classList.add("tag", "highlight");
+    clear.id = "clear";
+    clear.innerText = "Clear x";
+    clear.addEventListener("click", () => {
+      selectedGenre = [];
+      setGenre();
+      getMovies(API_URL);
+    });
+    tagsEl.append(clear);
+  }
+}
+
+getMovies(API_URL);
+
 getMovies(API_URL);
 function getMovies(url) {
   /**
@@ -174,7 +219,7 @@ function getMovies(url) {
 
         tagsEl.scrollIntoView({ behavior: "smooth" });
       } else {
-        main.innerHTML = `<h1 class="no-results">No Results Found</h1>`;
+        main.innerHTML = `<h1 class="no-results">Sem resultados encontrados</h1>`;
       }
     });
 }
@@ -240,10 +285,10 @@ function getColor(vote) {
 }
 
 function closeNav() {
-/**
- * Fecha a navegação (overlay) que exibe trailers de filmes na página.
- * 
- * @returns {void} - Esta função não retorna nada. Ela fecha a navegação ao ajustar a largura para "0%".
- */
+  /**
+   * Fecha a navegação (overlay) que exibe trailers de filmes na página.
+   *
+   * @returns {void} - Esta função não retorna nada. Ela fecha a navegação ao ajustar a largura para "0%".
+   */
   document.getElementById("myNav").style.width = "0%";
 }
