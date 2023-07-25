@@ -104,7 +104,12 @@ window.addEventListener("load", () => {
 });
 
 let selectedGenre = [];
-
+/**
+ * Função setGenre()
+ * Cria e exibe uma lista de tags correspondentes a diferentes gêneros de filmes.
+ * Permite ao usuário clicar nas tags para selecionar ou deselecionar os gêneros de interesse.
+ * Atualiza dinamicamente a lista de gêneros selecionados e destaca visualmente as tags selecionadas.
+ */
 function setGenre() {
   tagsEl.innerHTML = "";
   genres.forEach((genre) => {
