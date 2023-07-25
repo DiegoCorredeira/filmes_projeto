@@ -7,19 +7,19 @@ const SEARCH_URL = `${BASE_URL}/search/movie?${API_KEY}`;
 const genres = [
   {
     id: 28,
-    name: "Action",
+    name: "Ação",
   },
   {
     id: 12,
-    name: "Adventure",
+    name: "Aventura",
   },
   {
     id: 16,
-    name: "Animation",
+    name: "Animação",
   },
   {
     id: 35,
-    name: "Comedy",
+    name: "Comedia",
   },
   {
     id: 80,
@@ -27,7 +27,7 @@ const genres = [
   },
   {
     id: 99,
-    name: "Documentary",
+    name: "Documentário",
   },
   {
     id: 18,
@@ -35,15 +35,15 @@ const genres = [
   },
   {
     id: 10751,
-    name: "Family",
+    name: "Familiar",
   },
   {
     id: 14,
-    name: "Fantasy",
+    name: "Fantasia",
   },
   {
     id: 36,
-    name: "History",
+    name: "Historia",
   },
   {
     id: 27,
@@ -51,11 +51,11 @@ const genres = [
   },
   {
     id: 10402,
-    name: "Music",
+    name: "Musica",
   },
   {
     id: 9648,
-    name: "Mystery",
+    name: "Mistério",
   },
   {
     id: 10749,
@@ -63,11 +63,11 @@ const genres = [
   },
   {
     id: 878,
-    name: "Science Fiction",
+    name: "Ficção cientifica",
   },
   {
     id: 10770,
-    name: "TV Movie",
+    name: "Série",
   },
   {
     id: 53,
@@ -75,11 +75,11 @@ const genres = [
   },
   {
     id: 10752,
-    name: "War",
+    name: "Guerra",
   },
   {
     id: 37,
-    name: "Western",
+    name: "Velho Oeste",
   },
 ];
 
@@ -102,7 +102,6 @@ window.addEventListener("load", () => {
   let loader = document.querySelector(".loader");
   loader.style.display = "none";
 });
-
 let selectedGenre = [];
 setGenre();
 /**
@@ -181,8 +180,6 @@ function clearBtn() {
     tagsEl.append(clear);
   }
 }
-
-getMovies(API_URL);
 
 getMovies(API_URL);
 function getMovies(url) {
@@ -268,6 +265,84 @@ function showMovies(data) {
   });
 }
 
+const overlayContent = document.getElementById("overlay-content");
+function openNav(movie) {
+  let id = movie.id;
+  fetch(BASE_URL + "/movie/" + id + "/videos?" + API_KEY)
+    .then((res) => res.json())
+    .then((videoData) => {
+      console.log(videoData);
+      if (videoData) {
+        document.getElementById("myNav").style.width = "100%";
+        if (videoData.results.length > 0) {
+          let embed = [];
+          let dots = [];
+          videoData.results.forEach((video, idx) => {
+            let { name, key, site } = video;
+
+            if (site == "YouTube") {
+              embed.push(`
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" title="${name}" class="embed hide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          
+          `);
+
+              dots.push(`
+              <span class="dot">${idx + 1}</span>
+            `);
+            }
+          });
+
+          let content = `
+        <h1 class="no-results">${movie.original_title}</h1>
+        <br/>
+        
+        ${embed.join("")}
+        <br/>
+
+        <div class="dots">${dots.join("")}</div>
+        
+        `;
+          overlayContent.innerHTML = content;
+          activeSlide = 0;
+          showVideos();
+        } else {
+          overlayContent.innerHTML = `<h1 class="no-results">Não foi encontrado um resultado.</h1>`;
+        }
+      }
+    });
+}
+
+function closeNav() {
+	document.getElementById("myNav").style.width = "0%";
+}
+
+let activeSlide = 0;
+let totalVideos = 0;
+
+function showVideos() {
+	let embedClasses = document.querySelectorAll(".embed");
+	let dots = document.querySelectorAll(".dot");
+
+	totalVideos = embedClasses.length;
+	embedClasses.forEach((embedTag, idx) => {
+		if (activeSlide == idx) {
+			embedTag.classList.add("show");
+			embedTag.classList.remove("hide");
+		} else {
+			embedTag.classList.add("hide");
+			embedTag.classList.remove("show");
+		}
+	});
+
+	dots.forEach((dot, indx) => {
+		if (activeSlide == indx) {
+			dot.classList.add("active");
+		} else {
+			dot.classList.remove("active");
+		}
+	});
+}
+
 function getColor(vote) {
   /**
    * Retorna a cor correspondente à classificação de um filme com base na pontuação (voto) fornecida.
@@ -283,6 +358,7 @@ function getColor(vote) {
     return "red";
   }
 }
+
 
 function closeNav() {
   /**
