@@ -190,35 +190,38 @@ function getMovies(url) {
    * @returns {void} - Esta função não retorna nada. Ela atualiza a página da web com os dados dos filmes obtidos.
    */
   lastUrl = url;
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data.results);
-      if (data.results.length !== 0) {
-        showMovies(data.results);
-        currentPage = data.page;
-        nextPage = currentPage + 1;
-        prevPage = currentPage - 1;
-        totalPages = data.total_pages;
+  axios
+  .get(url)
+  .then((response) => {
+    const data = response.data;
+    console.log(data.results);
+    if (data.results.length !== 0) {
+      showMovies(data.results);
+      currentPage = data.page;
+      nextPage = currentPage + 1;
+      prevPage = currentPage - 1;
+      totalPages = data.total_pages;
 
-        current.innerText = currentPage;
+      current.innerText = currentPage;
 
-        if (currentPage <= 1) {
-          prev.classList.add("disabled");
-          next.classList.remove("disabled");
-        } else if (currentPage >= totalPages) {
-          prev.classList.remove("disabled");
-          next.classList.add("disabled");
-        } else {
-          prev.classList.remove("disabled");
-          next.classList.remove("disabled");
-        }
-
-        tagsEl.scrollIntoView({ behavior: "smooth" });
+      if (currentPage <= 1) {
+        prev.classList.add("disabled");
+        next.classList.remove("disabled");
+      } else if (currentPage >= totalPages) {
+        prev.classList.remove("disabled");
+        next.classList.add("disabled");
       } else {
-        main.innerHTML = `<h1 class="no-results">Sem resultados encontrados</h1>`;
+        prev.classList.remove("disabled");
+        next.classList.remove("disabled");
       }
-    });
+      tagsEl.scrollIntoView({ behavior: "smooth" });
+    } else {
+      main.innerHTML = `<h1 class="no-results">Não foi encontrado um resultado.</h1>`;
+    }
+  })
+  .catch((error) => {
+    console.log("Erro!!", error);
+  })
 }
 
 function showMovies(data) {
