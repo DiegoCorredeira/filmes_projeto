@@ -7,11 +7,12 @@ html {
   height: 100%;
 }
 :root {
-  --primary-background-color: #20234d;
-  --secondary-background-color: #4e5494;
+  --primary-background-color: #212529;
+  --secondary-background-color: #2e2d2d; 
 }
 
 body {
+  color: #333536;
   height: 100%;
   background: linear-gradient(
     45deg,
@@ -31,7 +32,7 @@ header {
   align-items: center;
   justify-content: space-between;
   background: linear-gradient(
-    -45deg,
+    90deg,
     var(--primary-background-color),
     var(--secondary-background-color)
   );
@@ -89,7 +90,7 @@ a {
   background-color: var(--primary-background-color);
 }
 .search::placeholder {
-  color: #fff;
+  color: #ffffff49;
 }
 main{
   display: flex;
@@ -175,6 +176,10 @@ main{
   display: inline-block;
   cursor: pointer;
 }
+.tag:hover{
+  background-color: #fff;
+  color: var(--primary-background-color);
+}
 .tag.highlight {
   background-color: #fff;
   color: var(--primary-background-color);
@@ -207,7 +212,7 @@ main{
   font-weight: 600;
 }
 .know-more {
-  background-color: #222550;
+  background-color: #1a1b2b;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -216,6 +221,9 @@ main{
   padding: 10px 20px;
   margin-top: 5px;
   cursor: pointer;
+}
+.know-more:hover {
+  background-color: #222550;
 }
 
 .overlay {
