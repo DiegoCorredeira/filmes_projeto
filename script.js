@@ -2,7 +2,7 @@ const API_KEY = "api_key=c2318667c3843865fe1a4900b7859bec";
 const BASE_URL = "https://api.themoviedb.org/3";
 const API_URL = `${BASE_URL}/discover/movie?language=pt-BR&sort_by=popularity.desc&${API_KEY}`;
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
-const SEARCH_URL = `${BASE_URL}/search/movie?${API_KEY}`;
+const SEARCH_URL = `${BASE_URL}/search/movie?language=pt-BR&${API_KEY}`;
 
 const genres = [
   {
