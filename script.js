@@ -267,6 +267,12 @@ function showMovies(data) {
 
 const overlayContent = document.getElementById("overlay-content");
 function openNav(movie) {
+  /**
+   * Abre a navegação (overlay) para exibir trailers de filmes na página.
+   *
+   * @param {object} movie - Objeto contendo informações do filme, incluindo o ID necessário para obter os trailers.
+   * @returns {void} - Esta função não retorna nada. Ela abre a navegação (overlay) e carrega os trailers de filmes na página.
+   */
   let id = movie.id;
   fetch(BASE_URL + "/movie/" + id + "/videos?" + API_KEY)
     .then((res) => res.json())
@@ -313,35 +319,68 @@ function openNav(movie) {
 }
 
 function closeNav() {
-	document.getElementById("myNav").style.width = "0%";
+  /**
+   * Fecha a navegação (overlay) que exibe trailers de filmes na página.
+   *
+   * @returns {void} - Esta função não retorna nada. Ela fecha a navegação ao ajustar a largura para "0%".
+   */
+  document.getElementById("myNav").style.width = "0%";
 }
 
 let activeSlide = 0;
 let totalVideos = 0;
 
 function showVideos() {
-	let embedClasses = document.querySelectorAll(".embed");
-	let dots = document.querySelectorAll(".dot");
+  /**
+   * Atualiza a exibição dos vídeos incorporados (embed) e os pontos indicadores (dots) de um slider de vídeos.
+   *
+   * @param {number} activeSlide - O índice do vídeo atualmente visível no slider.
+   * @returns {void} - Esta função não retorna nada. Ela atualiza a exibição dos vídeos e os pontos indicadores com base no índice fornecido.
+   */
+  let embedClasses = document.querySelectorAll(".embed");
+  let dots = document.querySelectorAll(".dot");
 
-	totalVideos = embedClasses.length;
-	embedClasses.forEach((embedTag, idx) => {
-		if (activeSlide == idx) {
-			embedTag.classList.add("show");
-			embedTag.classList.remove("hide");
-		} else {
-			embedTag.classList.add("hide");
-			embedTag.classList.remove("show");
-		}
-	});
+  totalVideos = embedClasses.length;
+  embedClasses.forEach((embedTag, idx) => {
+    if (activeSlide == idx) {
+      embedTag.classList.add("show");
+      embedTag.classList.remove("hide");
+    } else {
+      embedTag.classList.add("hide");
+      embedTag.classList.remove("show");
+    }
+  });
 
-	dots.forEach((dot, indx) => {
-		if (activeSlide == indx) {
-			dot.classList.add("active");
-		} else {
-			dot.classList.remove("active");
-		}
-	});
+  dots.forEach((dot, indx) => {
+    if (activeSlide == indx) {
+      dot.classList.add("active");
+    } else {
+      dot.classList.remove("active");
+    }
+  });
 }
+
+const leftArrow = document.getElementById("left-arrow");
+const rightArrow = document.getElementById("right-arrow");
+
+leftArrow.addEventListener("click", () => {
+  if (activeSlide > 0) {
+    activeSlide--;
+  } else {
+    activeSlide = totalVideos - 1;
+  }
+
+  showVideos();
+});
+
+rightArrow.addEventListener("click", () => {
+  if (activeSlide < totalVideos - 1) {
+    activeSlide++;
+  } else {
+    activeSlide = 0;
+  }
+  showVideos();
+});
 
 function getColor(vote) {
   /**
@@ -359,12 +398,52 @@ function getColor(vote) {
   }
 }
 
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-function closeNav() {
+  const searchTerm = search.value;
+  selectedGenre = [];
+  setGenre();
+  if (searchTerm) {
+    getMovies(SEARCH_URL + "&query=" + searchTerm);
+  } else {
+    getMovies(API_URL);
+  }
+});
+
+prev.addEventListener("click", () => {
+  if (prevPage > 0) {
+    pageCall(prevPage);
+  }
+});
+
+next.addEventListener("click", () => {
+  if (nextPage <= totalPages) {
+    pageCall(nextPage);
+  }
+});
+
+function pageCall(page) {
   /**
-   * Fecha a navegação (overlay) que exibe trailers de filmes na página.
+   * A função pageCall recebe um número de página como entrada e modifica a URL para obter filmes da página correspondente.
+   * Se o parâmetro de consulta "page" ainda não existir na URL, ele adiciona o parâmetro "page" à URL e obtém filmes da página especificada.
+   * Se o parâmetro de consulta "page" já existir, ele atualiza o número da página e obtém filmes de acordo com o número fornecido.
    *
-   * @returns {void} - Esta função não retorna nada. Ela fecha a navegação ao ajustar a largura para "0%".
+   * @param {number} page - O número da página para obter filmes.
+   * @returns {void} - Esta função não retorna nada. Ela atualiza a URL e obtém filmes com base no número da página fornecido.
    */
-  document.getElementById("myNav").style.width = "0%";
+  let urlSplit = lastUrl.split("?");
+  let queryParams = urlSplit[1].split("&");
+  let key = queryParams[queryParams.length - 1].split("=");
+  if (key[0] != "page") {
+    let url = lastUrl + "&page=" + page;
+    getMovies(url);
+  } else {
+    key[1] = page.toString();
+    let a = key.join("=");
+    queryParams[queryParams.length - 1] = a;
+    let b = queryParams.join("&");
+    let url = urlSplit[0] + "?" + b;
+    getMovies(url);
+  }
 }
