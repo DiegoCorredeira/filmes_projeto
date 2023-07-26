@@ -1,3 +1,10 @@
+/**
+ * API_KEY: A chave de API necessária para acessar a API The Movie Database. Chave obrigatória para fazer requisição.
+ * BASE_URL: URL base para fazer requisição à API The Movie Database.
+ * API_URL: A URL completa para obter dados de filmes da API. Ela recupera filmes populares ordenados por popularidade em ordem decrescente e no idioma PT-BR.
+ * IMAGE_URL: A URL base para imagens de filmes. Obtem a imagem do filme.
+ * SEARCH_URL: A URL completa para pesquisar filmes na API. Permite pesquisar filmes (será sempre em PT-BR)
+ */
 const API_KEY = "api_key=c2318667c3843865fe1a4900b7859bec";
 const BASE_URL = "https://api.themoviedb.org/3";
 const API_URL = `${BASE_URL}/discover/movie?language=pt-BR&sort_by=popularity.desc&${API_KEY}`;
@@ -191,37 +198,37 @@ function getMovies(url) {
    */
   lastUrl = url;
   axios
-  .get(url)
-  .then((response) => {
-    const data = response.data;
-    console.log(data.results);
-    if (data.results.length !== 0) {
-      showMovies(data.results);
-      currentPage = data.page;
-      nextPage = currentPage + 1;
-      prevPage = currentPage - 1;
-      totalPages = data.total_pages;
+    .get(url)
+    .then((response) => {
+      const data = response.data;
+      console.log(data.results);
+      if (data.results.length !== 0) {
+        showMovies(data.results);
+        currentPage = data.page;
+        nextPage = currentPage + 1;
+        prevPage = currentPage - 1;
+        totalPages = data.total_pages;
 
-      current.innerText = currentPage;
+        current.innerText = currentPage;
 
-      if (currentPage <= 1) {
-        prev.classList.add("disabled");
-        next.classList.remove("disabled");
-      } else if (currentPage >= totalPages) {
-        prev.classList.remove("disabled");
-        next.classList.add("disabled");
+        if (currentPage <= 1) {
+          prev.classList.add("disabled");
+          next.classList.remove("disabled");
+        } else if (currentPage >= totalPages) {
+          prev.classList.remove("disabled");
+          next.classList.add("disabled");
+        } else {
+          prev.classList.remove("disabled");
+          next.classList.remove("disabled");
+        }
+        tagsEl.scrollIntoView({ behavior: "smooth" });
       } else {
-        prev.classList.remove("disabled");
-        next.classList.remove("disabled");
+        main.innerHTML = `<h1 class="no-results">Não foi encontrado um resultado.</h1>`;
       }
-      tagsEl.scrollIntoView({ behavior: "smooth" });
-    } else {
-      main.innerHTML = `<h1 class="no-results">Não foi encontrado um resultado.</h1>`;
-    }
-  })
-  .catch((error) => {
-    console.log("Erro!!", error);
-  })
+    })
+    .catch((error) => {
+      console.log("Erro!!", error);
+    });
 }
 
 function showMovies(data) {
